@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+}
+
+.headerContainer {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.headerContainer h1 {
+  background: -webkit-gradient(linear, left top, right top, from(#2152ff), to(#21d4fd));
+  background: linear-gradient(90deg, #2152ff, #21d4fd);
+  padding: 1rem;
+  color: #fff;
+}
+
+#homeworkLinks {
+  margin: 1.5rem auto;
+  text-align: center;
+}
+
+#homeworkLinks ol {
+  list-style-position: inside;
+}
+
+#homeworkLinks ol li a {
+  text-decoration: none;
+  color: #344767;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#homeworkLinks ol li a:hover {
+  color: #8392ab;
+  font-size: 1.4rem;
+}
+/*# sourceMappingURL=styles.css.map */

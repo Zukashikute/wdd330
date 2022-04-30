@@ -1,0 +1,38 @@
+@import "keyframes";
+
+// Home Page Styles
+* {
+  margin: 0;
+}
+
+// Header Styles
+.headerContainer {
+  margin: 0 auto;
+  text-align: center;
+
+  & h1 {
+    background: linear-gradient(90deg, #2152ff, #21d4fd);
+    padding: 1rem;
+    color: #fff;
+  }
+}
+
+// Body Styles
+#homeworkLinks {
+  margin: 1.5rem auto;
+  text-align: center;
+  & ol {
+    list-style-position: inside;
+  }
+
+  & ol li a {
+    text-decoration: none;
+    color: #344767;
+    transition: all 0.3s ease;
+  }
+
+  & ol li a:hover {
+    color: #8392ab;
+    font-size: 1.4rem;
+  }
+}
