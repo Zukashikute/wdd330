@@ -5,5 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Week 3</title>
   </head>
-  <body></body>
+  <body>
+    <div>
+      <h1>Notes</h1>
+    </div>
+    <div>
+      <h3>The DOM</h3>
+      <ul>
+        <li>
+          The document.getElementById(), document.getElementsByClassName(),
+          document.getElementsByTagNames() and document.querySelector() can be
+          used to access elements on a page.
+        </li>
+        <li>
+          The parentNode(), previousSibling(), nextSibling(), childNodes() and
+          children() methods can be used to navigate around the DOM tree.
+        </li>
+        <li>
+          An element’s attributes can be accessed using the getAttribute()
+          method, and updated using the setAttribute() method.
+        </li>
+        <li>
+          The createElement() and createTextNode() methods can be used to create
+          dynamic markup on the fly.
+        </li>
+        <li>
+          Markup can be added to the page using the appendChild() and
+          insertBefore() methods.
+        </li>
+        <li>
+          Elements can be replaced using the replaceChild() method, and removed
+          using the removeChild() method.
+        </li>
+        <li>
+          The innerHTML property can be used to insert raw HTML directly into
+          the DOM.
+        </li>
+        <li>
+          The CSS properties of an element can be changed by accessing the style
+          property.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Events</h3>
+
+      <h4>Type of Events</h4>
+      <ul>
+        <li>Mouse Events</li>
+        <p>
+          We have already seen the click event that occurs when a mouse button
+          is clicked. There are also the mousedown and mouseup events. These
+          both occur before a click event is fired.
+        </p>
+        <li>Keyboard Events</li>
+        <p>
+          Three events that occur when a user presses a key are: keydown,
+          keypress and keyup. When a user presses a key, the events occur in
+          that order. They are not tied to any particular key, although the
+          information about which key was pressed is a property of the event
+          object. <br />
+
+          The keydown event occurs when a key is pressed and will continue to
+          occur if the key is held down. <br />
+
+          The keypress event occurs after a keydown event but before a keyup
+          event. The keypress event only occurs for keys that produce character
+          input (plus the 'Delete' key). This means that it’s the most reliable
+          way to find out the character that was pressed on the keyboard. <br />
+
+          The keyup event occurs when a key is released. <br />
+
+          To understand the differences in these events, it is important to
+          distinguish between a physical key on the keyboard and a character
+          that appears on the screen. The keydown event is the action of
+          pressing a key, whereas the keypress event is the action of a
+          character being typed on the screen.
+        </p>
+        <li>Touch Events</li>
+        <p>
+          Many modern devices now support touch events. These are used on
+          smartphones and tablets, as well as touch-screen monitors, satellite
+          navigators and trackpads. Touch events are usually made with a finger,
+          but can also be by stylus or another part of the body. There are a
+          number of touch events that cover many types of touch interactions.
+          <br />
+
+          It’s important to support mouse events as well as touch events, so
+          non-touch devices are also supported. With so many different devices
+          these days, you can’t rely on users using just touch or a mouse. In
+          fact, some devices, such as touchscreen laptops, support both mouse
+          and touch interactions. <br />
+
+          The touch start event occurs when a user initially touches the
+          surface.
+          <br />
+
+          The touch end event occurs when a user stops touching the surface:
+          <br />
+          The touch move event occurs after a user has touched the screen then
+          moves around without leaving. It will continue to occur as long as the
+          user is still touching the screen, even if they leave the element to
+          which the event listener is attached. <br />
+
+          The touch enter event occurs when a user has already started touching
+          the surface, but then passes over the element to which the event
+          listener is attached. <br />
+
+          The touch leave event occurs when the user is still touching the
+          surface, but leaves the element to which the event listener is
+          attached. <br />
+
+          The touch cancel event occurs when a touch event is interrupted, such
+          as a user’s finger moving outside the document window, or too many
+          fingers being used at once. A pop-up dialog will also cancel a touch
+          event.
+        </p>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Questions</h3>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Challenges</h2>
+      <div></div>
+      <h2>Group Activity</h2>
+      <a href="./challenges/teamacitvity.html">Team Activity</a>
+    </div>
+  </body>
 </html>
