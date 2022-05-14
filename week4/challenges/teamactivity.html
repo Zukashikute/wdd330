@@ -1,0 +1,125 @@
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Tic Tac Toe Game</title>
+   <style>
+      /* styles for the table based board */
+      .tableBoard {
+        width: 320px;
+        height: 320px;
+      }
+      .tableBoard td,
+      .tableBoard tr {
+        width: 33.3%;
+        height: 33.3%;
+      }
+      .tableBoard td {
+        border-right: 1px solid;
+        border-bottom: 1px solid;
+        font-size: 5em;
+        text-align: center;
+      }
+
+      .tableBoard td:last-child {
+        border-right: 0;
+      }
+
+      .tableBoard tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .divBoard {
+        display: grid;
+        grid-template-columns: 100px 100px 100px;
+        grid-template-rows: 100px 100px 100px;
+        justify-content: center;
+      }
+      .divBoard > div {
+        border: 1px solid;
+        font-size: 5em;
+        text-align: center;
+      }
+      /* .divBoard > div:nth-child(3n) {
+        border-right: 0;
+      }
+      .divBoard > div:nth-child(n + 7) {
+        border-bottom: 0;
+      } */
+    </style>
+</head>
+<body>
+   <table class="tableBoard">
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+
+    <div class="divBoard">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <button id="reset">Reset</button>
+    <script>
+      const tableBoard = document.querySelector('.tableBoard');
+      const divBoard = document.querySelector('.divBoard');
+      const resetButton = document.getElementById('reset');
+      const player1 = 'X';
+      const player2 = 'O';
+      let player = player1;
+      
+      function addPiece(e) {
+        console.log(e.target);
+        e.target.innerHTML = player;
+        if (player === player1) player = player2;
+        else player = player1;
+      }
+
+      // table version
+      function resetBoard() {
+        console.dir(tableBoard);
+        for (let i = 0; i < tableBoard.rows.length; i++) {
+          let row = tableBoard.rows[i];
+          for (let j = 0; j < row.cells.length; j++) {
+            row.cells[j].innerHTML = '';
+          }
+        }
+      }
+      // div version
+      function resetBoardDiv() {
+        const divBoard = document.querySelector('.divBoard');
+        for (let i = 0; i < divBoard.children.length; i++) {
+          divBoard.children[i].innerText = '';
+        }
+        const children = Array.from(divBoard.children);
+        const empty = children.filter(function(child) {
+          return child.innerText == 'X' || child.innerText == 'O';
+        });
+        console.log(empty);
+      }
+      tableBoard.addEventListener('click', addPiece);
+      divBoard.addEventListener('click', addPiece);
+      reset.addEventListener('click', resetBoardDiv);
+    </script>
+</body>
+</html>

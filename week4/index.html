@@ -1,0 +1,208 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week 4</title>
+  </head>
+  <body>
+    <div>
+      <h1>Notes</h1>
+    </div>
+    <div>
+      <h3>Forms</h3>
+      <ul>
+        <li>
+          document.forms will return an HTML collection of all the forms on a
+          page.
+        </li>
+        <li>
+          form.elements will return an HTML collection of all the elements
+          contained within a form.
+        </li>
+        <li>
+          Forms have focus, blur, and change events that fire as a user
+          interacts with the form.
+        </li>
+        <li>
+          Forms also have a submit event that can be used to intercept a form
+          before it’s been submitted.
+        </li>
+        <li>
+          The information entered into a form can be read or updated using the
+          value property of the form controls.
+        </li>
+        <li>
+          The HTML5 form validation API can be used to automatically validate a
+          form, but only at a basic level, so a custom validation script may be
+          required.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Object-Oriented Programming</h3>
+
+      <h4>Object-Oriented Programming</h4>
+      <p>
+        Object-oriented programming is often used to model representations of
+        objects in the real world. There are three main concepts in OOP:
+        encapsulation, polymorphism and inheritance. I’m going to use my juicer
+        to illustrate how each of these concepts can be applied in a programming
+        environment, since the juicer can be considered an object. It’s a
+        wonderful machine that makes fresh juice for me every morning. In many
+        ways, my juicer can be thought of as an object, as it has properties
+        such as speed and capacity, and also has methods or actions it can
+        perform, such as juicing, switching on and switching off.
+      </p>
+
+      <h4>Encapsulation</h4>
+      <p>
+        When I use my juicer, I put the fruit into the machine, press the 'on'
+        button and out comes the juice. I haven’t a clue how it does it—only
+        that it makes a very loud noise! This demonstrates the concept of
+        encapsulation: the inner workings are kept hidden inside the object and
+        only the essential functionalities are exposed to the end user, such as
+        the 'on' button. In OOP, this involves keeping all the programming logic
+        inside an object and making methods available to implement the
+        functionality, without the outside world needing to know how it’s done.
+      </p>
+
+      <h4>Polymorphism</h4>
+      <p>
+        My juicer isn't the only appliance I own that has an 'on' button,
+        although the way the on button works is slightly different for each
+        appliance. My juicer also uses the same electrical outlet as other
+        appliances in my kitchen. I can also place various types of fruit into
+        it and it still juices them. These examples demonstrate the concept of
+        polymorphism: the same process can be used for different objects. In
+        OOP, this means various objects can share the same method, but also have
+        the ability to override shared methods with a more specific
+        implementation.
+      </p>
+
+      <h4>Inheritance</h4>
+      <p>
+        I’d really like the next model up from my juicer, as it can deal with
+        more types of fruit and it’s a bit quieter. Even though it has these
+        extra features, I’m sure that inside it uses many of the same parts that
+        my juicer has. This demonstrates the concept of inheritance: taking the
+        features of one object then adding some new features. In OOP, this means
+        we can take an object that already exists and inherit all its properties
+        and methods. We can then improve on its functionality by adding new
+        properties and methods.
+      </p>
+
+      <h4>Classes</h4>
+      <p>
+        Many object-oriented languages, such as Java and Ruby, are known as
+        class-based languages. This is because they use a class to define a
+        blueprint for an object. Objects are then created as an instance of that
+        class, and inherit all the properties and methods of the class. In my
+        juicer example, the juicer class would represent the design of the
+        juicer, and each juicer that’s made on the production line would be
+        instances of that class.
+        <br />
+        JavaScript didn't have classes before ES6, and used the concept of using
+        actual objects as the blueprint for creating more objects. This is known
+        as a prototype-based language. In the juicer example, this might involve
+        building an actual prototype juicer then using this prototype as the
+        basis for making all the other juicers. The juicers based on the
+        prototype would be able to do everything the prototype could do, with
+        some being able to do even more. Even though ES6 now supports classes,
+        it still uses this prototypal inheritance model in the background.
+      </p>
+      <ul>
+        <li>
+          Object-oriented programming (OOP) is a way of programming that uses
+          objects that encapsulate their own properties and methods.
+        </li>
+
+        <li>
+          The main concepts of OOP are encapsulation, polymorphism and
+          inheritance.
+        </li>
+
+        <li>
+          Constructor functions can be used to create instances of objects.
+        </li>
+
+        <li>
+          ES6 introduced class declarations that use the class keyword. These
+          can be used in place of constructor functions.
+        </li>
+        <li>
+          Inside a constructor function or class declaration, the keyword this
+          refers to the object returned by the function.
+        </li>
+        <li>
+          All instances of a class or constructor function inherit all the
+          properties and methods of its prototype.
+        </li>
+        <li>
+          The prototype is live, so new properties and methods can be added to
+          existing instances.
+        </li>
+        <li>
+          The prototype chain is used to find an available method. If an object
+          lacks a method, JavaScript will check whether its prototype has the
+          method. If not, it will check that function’s prototype until it finds
+          the method or reaches the Object constructor function.
+        </li>
+        <li>
+          Private properties and methods can be created by defining variables
+          using const and defining a function inside a constructor function.
+          These can be made public using getter and setter functions.
+        </li>
+
+        <li>
+          Monkey-patching is the process of adding methods to built-in objects
+          by augmenting their prototypes. This should be done with caution as it
+          can cause unexpected behavior in the way built-in objects work.
+        </li>
+        <li>
+          A mixin method can be used to add properties and methods from other
+          objects without creating an inheritance chain.
+        </li>
+        <li>
+          Methods can be chained together and called in sequence if they return
+          a reference to this.
+        </li>
+        <li>
+          Polymorphism allows objects to override shared methods with a more
+          specific implementation.
+        </li>
+        <li>
+          The value of this is not retained inside nested functions, which can
+          cause errors. This can be worked around by using that = this, using
+          the bind(this) method and using arrow functions.
+        </li>
+        <li>Methods can be borrowed from other objects.</li>
+        <li>
+          Composition over inheritance is a design pattern where objects are
+          composed from 'building-block' objects, rather than inheriting all
+          their properties and methods from a parent class.
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Questions</h3>
+      <ul>
+        <li>
+          In real world experience, do we approach the same tactic in this topic
+          when accessing forms input fields?
+        </li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Challenges</h2>
+      <a href="./challenges/ntnchallenge.html">Forms Challenge</a>
+      <h2>Group Activity</h2>
+      <a href="./challenges/teamactivity.html">Team Activity</a>
+    </div>
+  </body>
+</html>
