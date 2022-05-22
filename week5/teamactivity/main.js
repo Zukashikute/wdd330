@@ -1,0 +1,2 @@
+import Hikes from "./hikes";
+

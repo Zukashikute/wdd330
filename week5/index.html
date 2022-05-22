@@ -1,0 +1,117 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week 5</title>
+  </head>
+  <body>
+    <div>
+      <h1>Notes</h1>
+    </div>
+    <div>
+      <h3>Errors, Exceptions, and Warnings</h3>
+      <p>
+        Errors are caused when something goes wrong in a program. They are
+        usually caused by one of the following:
+      </p>
+      <ul>
+        <li>
+          System error ― there’s a problem with the system or external devices
+          with which the program is interacting.
+        </li>
+        <li>
+          Programmer error ― the program contains incorrect syntax or faulty
+          logic; it could even be as simple as a typo.
+        </li>
+        <li>
+          User error ― the user has entered data incorrectly, which the program
+          is unable to handle.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h4>Exceptions</h4>
+      <p>
+        An exception is an error that produces a return value that can then be
+        used by the program to deal with the error. For example, trying to call
+        a method that is nonexistent will result in a reference error that
+        raises an exception, as you can see in the example below when we try to
+        call the mythical unicorn() function:
+      </p>
+      <p>
+        unicorn(); <br />
+        ReferenceError: unicorn is not defined
+      </p>
+
+      <h4>Exception Handling</h4>
+      <p>
+        When an exception occurs, the program terminates with an error message.
+        This is ideal in development as it allows us to identify and fix errors.
+        In production, however, it will appear as if the program has crashed,
+        which does not reflect well on a ninja programmer.
+        <br />
+        It is possible to handle exceptions gracefully by catching the error.
+        Any errors can be hidden from users, but still identified. We can then
+        deal with the error appropriately ― perhaps even ignore it ― and keep
+        the program running.
+        <br />
+        (<em>try</em>, <em>catch</em>, and <em>finally</em>)
+      </p>
+      <p>
+        pi = 3.142; <br />
+        JavaScript Warning: assignment to undeclared variable
+      </p>
+
+      <h4>Test-driven Development</h4>
+      <p>
+        Test-driven development (TDD) is the process of writing tests before any
+        actual code. Obviously these tests will initially fail, because there is
+        no code to test. The next step is to write some code to make the tests
+        pass. After this, the code is refactored to make it faster, more
+        readable, and remove any repetition. The code is continually tested at
+        each stage to make sure it continues to work. This process should be
+        followed in small piecemeal chunks every time a new feature is
+        implemented, resulting in the following workflow:
+      </p>
+      <ol>
+        <li>Write tests (that initially fail)</li>
+        <li>Write code to pass the tests</li>
+        <li>Refactor the code</li>
+        <li>Test refactored code</li>
+        <li>Write more tests for new features</li>
+      </ol>
+      <p>
+        This is often referred to as the “red-green-refactor” cycle of TDD, as
+        failing tests usually show up as red, and tests that pass show as green.
+      </p>
+      <p>
+        Test-driven development is considered to be best practice, but in
+        reality you'll find most developers tend to be more pragmatic when it
+        comes to writing tests. The TDD mindset can be hard to always use, and
+        at the end of the day, any tests are better than no tests at all. In
+        fact, this post by David Heinemeier Hansson shows that even the very
+        best coders don't always use TDD, and make no apologies for not doing
+        so. We cover an example in this chapter, but won't be using it for the
+        most of the examples in the rest of the book as it would make it far too
+        long!
+      </p>
+    </div>
+
+    <div>
+      <h3>Questions</h3>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Challenges</h2>
+      <h2>Group Activity</h2>
+      <a href="./teamactivity/index.html">Team Activity</a>
+    </div>
+  </body>
+</html>
