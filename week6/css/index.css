@@ -1,0 +1,60 @@
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  border: 1px solid gray;
+  max-width: 250px;
+  height: 20px;
+}
+
+span {
+  display: inline-block;
+  min-width: 195px;
+}
+
+#pagecontent {
+  max-width: 350px;
+  background-color: #6db8c9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  border-radius: 1rem;
+  box-shadow: 0px 2px 6px 2px rgb(135 135 135 / 40%);
+  ;
+}
+
+#todoTableFooter {
+  margin: 30px;
+}
+
+#todoTableButtons {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+#todoTableButtons button {
+  margin: 3px;
+  width: auto;
+  height: 18px;
+  background-color: #a9f5c7;
+  border: 1px solid gray;
+  border-radius: 1rem;
+}
+
+#todoTable {
+  max-width: 300px;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.delete-buttons {
+  height: 18px;
+  background-color: #f09595;
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+}
