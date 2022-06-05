@@ -1,0 +1,975 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week 5</title>
+  </head>
+  <body>
+    <div>
+      <h1>Notes</h1>
+    </div>
+    <div>
+      <h2>Further Functions</h2>
+      <p>
+        In JavaScript, functions are first-class objects, which means they can
+        be passed around in the same way as every other value. They can have
+        their own properties and methods, as well as accepting other functions
+        as parameters and being returned by other functions. This makes them a
+        very flexible tool to work with in JavaScript, and there are a variety
+        of techniques and patterns that can be used to make code cleaner.
+      </p>
+      <ul>
+        <li>Function properties and methods</li>
+        <li>Immediately Invoked function expressions</li>
+        <li>Self-defining functions</li>
+        <li>Recursive functions</li>
+        <li>Callbacks</li>
+        <li>Promises</li>
+        <li>Functions that return functions</li>
+        <li>Closures</li>
+        <li>Introduction to functional programming</li>
+        <li>Currying</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Function Properties and Methods</h3>
+      <p>
+        The fact that functions are first-class objects means they can have
+        properties and methods themselves. For example, all functions have a
+        length property that returns the number of parameters the function has.
+      </p>
+      <h4>Call and Apply Methods</h4>
+      <p>
+        The call() method can be used to set the value of this inside a function
+        to an object that is provided as the first argument. <br />
+
+        In the following example, the sayHello() function refers to an
+        unspecific object called this that has a property called name:
+      </p>
+      <p>
+        function sayHello(){ <br />
+        return `Hello, my name is ${ this.name }`; <br />
+        }
+      </p>
+      <p>
+        We can create some objects that have a name property, then use the
+        call() method to invoke the sayHello() function, providing each object
+        as an argument. This will then take the value of this in the function:
+      </p>
+      <p>
+        const clark = { name: 'Clark' }; <br />
+        const bruce = { name: 'Bruce' }; <br />
+
+        sayHello.call(clark); <br />
+        << 'Hello, my name is Clarke' <br />
+        <br />
+        sayHello.call(bruce); <br />
+        << 'Hello, my name is Bruce' <br />
+      </p>
+
+      <h4>Memoization</h4>
+      <p>
+        A useful feature of this is that it provides result caching, or
+        memoization. <br />
+        If a function takes some time to compute a return value, we can save the
+        result in a cache property. Then if the same argument is used again
+        later, we can return the value from the cache, rather than having to
+        compute the result again. For example, say squaring a number was an
+        expensive computational operation that took a long time. We could
+        rewrite the square() function so it saved each result in a cache object
+        that is a property of the function:
+      </p>
+
+      <p>
+        function square(x){ <br />
+        square.cache = square.cache || {}; <br />
+        if (!square.cache[x]) { <br />
+        square.cache[x] = x*x; <br />
+        } <br />
+        return square.cache[x] <br />
+        }
+      </p>
+
+      <p>
+        square(3); <br />
+        << 9 <br />
+        <br />
+        square(-11); <br />
+        << 121 <br />
+        <br />
+        square.cache; <br />
+        << {"3": 9, "-11": 121} <br />
+      </p>
+
+      <h3>Immediately Invoked Function Expressions</h3>
+      <p>
+        An Immediately Invoked Function Expression – or IIFE – (pronounced
+        'iffy') is an anonymous function that, as the name suggests, is invoked
+        as soon as it’s defined. This is easily achieved by placing parentheses
+        at the end of the function definition (remember we use parentheses to
+        invoke a function). The function also has to be made into an expression,
+        which is done by placing the whole declaration inside parentheses, as in
+        this example:
+      </p>
+      <p>
+        (function(){ <br />
+        const temp = 'World'; <br />
+        console.log(`Hello ${temp}`); <br />
+        })(); <br />
+        << 'Hello World'
+      </p>
+
+      <h3>Functions that Define and Rewrite Themselves</h3>
+      <p>
+        The dynamic nature of JavaScript means that a function is able to not
+        only call itself, but define itself, and even redefine itself. This is
+        done by assigning an anonymous function to a variable that has the same
+        name as the function. <br />
+        Consider the following function:
+      </p>
+      <p>
+        function party(){<br />
+        console.log('Wow this is amazing!');<br />
+        party = function(){<br />
+        console.log('Been there, got the T-Shirt');<br />
+        }<br />
+        }
+      </p>
+      <p>
+        This logs a message in the console, then redefines itself to log a
+        different message in the console. When the function has been called
+        once, it will be as if it was defined like this:
+      </p>
+      <p>
+        function party() { <br />
+        console.log('Been there, got the T-Shirt'); <br />
+        }
+      </p>
+
+      <p>
+        Every time the function is called after the first time, it will log the
+        message 'Been there, got the T-Shirt':
+      </p>
+      <p>
+        party(); <br />
+        << 'Wow this is amazing!' <br />
+        <br />
+        party(); <br />
+        << 'Been there, got the T-Shirt' <br />
+        <br />
+        party(); <br />
+        << 'Been there, got the T-Shirt'
+      </p>
+
+      <h4>Init-Time Branching</h4>
+      <p>
+        This technique can be used with the feature detection that we discussed
+        in the last chapter to create functions that rewrite themselves, known
+        as init-time branching. This enables the functions to work more
+        effectively in the browser, and avoid checking for features every time
+        they’re invoked.
+        <br />
+        Let’s take the example of our fictional unicorn object that’s yet to
+        have full support in all browsers. In the last chapter, we looked at how
+        we can use feature detection to check if this is supported. Now we can
+        go one step further: we can define a function based on whether certain
+        methods are supported. This means we only need to check for support the
+        first time the function is called:
+      </p>
+      <p>
+        function ride(){<br />
+        if (window.unicorn) { <br />
+        ride = function(){<br />
+        // some code that uses the brand new and sparkly unicorn methods<br />
+        return 'Riding on a unicorn is the best!';<br />
+        }<br />
+        } else {<br />
+        ride = function(){<br />
+        // some code that uses the older pony methods<br />
+        return 'Riding on a pony is still pretty good';<br />
+        }<br />
+        }<br />
+        return ride();<br />
+        }
+      </p>
+
+      <h3>Recursive Functions</h3>
+      <p>
+        A recursive function is one that invokes itself until a certain
+        condition is met. It’s a useful tool to use when iterative processes are
+        involved. A common example is a function that calculates the factorial
+        of a number:
+      </p>
+      <p>
+        function factorial(n) { <br />
+        if (n === 0) { <br />
+        return 1; <br />
+        } else { <br />
+        return n * factorial(n - 1); <br />
+        } <br />
+        }
+      </p>
+      <p>
+        This function will return 1 if 0 is provided as an argument (0 factorial
+        is 1), otherwise it will multiply the argument by the result of invoking
+        itself with an argument of one less. The function will continue to
+        invoke itself until finally the argument is 0 and 1 is returned. This
+        will result in a multiplication of 1, 2, 3 and all the numbers up to the
+        original argument.
+      </p>
+
+      <h3>Callbacks</h3>
+      <p>
+        You’ll recall that they’re functions passed to other functions as
+        arguments and then invoked inside the function they are passed to.
+      </p>
+      <h4>Event-driven Asynchronous Programming</h4>
+      <p>
+        Callbacks can be used to facilitate event-driven asynchronous
+        programming. JavaScript is a single-threaded environment, which means
+        only one piece of code will ever be processed at a time. This may seem
+        like a limitation, but non-blocking techniques can be used to ensure
+        that the program continues to run. Instead of waiting for an event to
+        occur, a callback can be created that’s invoked when the event happens.
+        This means that the code is able to run out of order, or asynchronously.
+        Events can be DOM events, such as the click and keyPress that we looked
+        at in Chapter 7, but they can also be events such as the completion of a
+        file download, data returned from a database, or the result of a complex
+        operation. By using callbacks, we ensure that waiting for these tasks to
+        complete doesn't hold up the execution of other parts of the program.
+        Once the task has been completed, the callback will be invoked before
+        returning to the rest of the program.
+        <br />
+        Here’s an example of a function called wait() that accepts a callback.
+        To simulate an operation that takes some time to happen, we can use the
+        setTimeout() function to call the callback after a given number of
+        seconds:
+      </p>
+      <p>
+        function wait(message, callback, seconds){<br />
+        setTimeout(callback,seconds * 1000);<br />
+        console.log(message);<br />
+        }
+      </p>
+      <p>Now let’s create a callback function to use:</p>
+      <p>
+        function selfDestruct(){ <br />
+        console.log('BOOOOM!'); <br />
+        }
+      </p>
+      <p>
+        If we invoke the wait() function then log a message to the console, we
+        can see how JavaScript works asynchronously:
+      </p>
+      <p>
+        wait('This tape will self-destruct in five seconds ... ', selfDestruct,
+        5); <br />
+        console.log('Hmmm, should I accept this mission or not ... ?'); <br />
+        <br />
+        << 'This tape will self-destruct in five seconds ... ' <br />
+        << 'Hmmm, should I accept this mission or not ... ? ' <br />
+        << 'BOOOOM!'
+      </p>
+      <p>
+        When the wait() function is invoked, any code inside it is run, so the
+        message 'This tape will self destruct in five seconds ... ' is
+        displayed. The setTimeout() function is asynchronous, which means that
+        the callback provided as an argument is placed on top of a stack that
+        gets cleared once the rest of the program has run. This means that
+        control is handed back to the program and the next line in the program
+        is run, which displays the message ‘Hmmm, should I accept this mission
+        or not ... ?’ Then, after five seconds, the callback is retrieved from
+        the stack and invoked. This demonstrates that the setTimeout() function
+        did not block the rest of the program from running. This is known as the
+        JavaScript event-loop, and you can learn more about it by watching this
+        <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">legendary video</a
+        >. <br />
+        Remember, though, that JavaScript is still single-threaded, so only one
+        task can happen at once. If an event only takes a small amount of time
+        to happen, it will still have to wait until other parts of the program
+        have executed before the callback is invoked. For example, let’s see
+        what happens if we set the waiting time to be zero seconds:
+      </p>
+      <p>
+        wait('This tape will self-destruct immediately ... ', selfDestruct,
+        0);<br />
+        console.log('Hmmm, should I accept this mission or not ... ?');<br />
+        <br />
+        << 'This tape will self-destruct immediately ... '<br />
+        << 'Hmmm, should I accept this mission or not ... ?'<br />
+        << 'BOOOOM!'
+      </p>
+      <p>
+        Notice the callback in the wait() function is still invoked last,
+        despite the wait time being set to zero seconds. We would have expected
+        the callback to have been invoked immediately, but a callback always has
+        to wait for the current execution stack to complete before it’s invoked.
+        In this case, the current execution stack is the rest of the function
+        and code already entered in the console. Once these have executed, the
+        callback is invoked before handing control back to the main program.
+      </p>
+      <h4>Callback Hell</h4>
+      <p>
+        The increase in the use of asynchronous programming in JavaScript has
+        meant that more and more callbacks are being used. This can result in
+        messy and confusing 'spaghetti code'. This is when more than one
+        callback is used in the same function, resulting in a large number of
+        nested blocks that are difficult to comprehend.
+        <br />
+        Callback hell is the term used to refer to this tangled mess of code,
+        and it's such a common issue that it even has its own website!
+        <br />
+        To illustrate this, let's say we had written a game that required the
+        following tasks to be completed:
+        <br />
+        The user logs in and a user object is returned<br />
+        The user ID is then used to fetch player information from the server<br />
+        The game then loads based on the player information<br />
+        All these operations are asynchronous, so can be written as functions
+        that use callbacks invoked once each task has been completed.<br />
+        <br />
+        The code might look like the snippet shown below:
+      </p>
+      <p>
+        login(userName, function(error,user) { <br />
+        if(error){ <br />
+        throw error; <br />
+        } else { <br />
+        getPlayerInfo(user.id, function(error,info){ <br />
+        if(error){ <br />
+        throw error; <br />
+        } else { <br />
+        loadGame(info, function(error,game) { <br />
+        if(error){ <br />
+        throw error; <br />
+        } else { <br />
+        // code to run game <br />
+        } <br />
+        }); <br />
+        } <br />
+        }); <br />
+        } <br />
+        });
+      </p>
+      <p>
+        You may have noticed there isn't much actual code in the example above.
+        The example only shows the flow from one function to the other, and yet
+        it still manages to look extremely complicated due to the large number
+        of nested if-else statements. In reality, there would be lots more code
+        to implement the actual functionality of the login(), getPlayerInfo()
+        and loadGame() functions.
+      </p>
+      <p>
+        Error-first Callbacks The code example above uses the error-first
+        callback style popularized by Node.js. In this coding pattern, callbacks
+        have two arguments. The first is the error argument, which is an error
+        object provided if something goes wrong when completing the operation.
+        The second argument is any data returned by the operation that can be
+        used in the body of the callback.
+      </p>
+      <h3>Promises</h3>
+      <p>
+        A promise represents the future result of an asynchronous operation.
+        Promises don't do anything that can't already be achieved using
+        callbacks, but they help simplify the process, and avoid the convoluted
+        code that can result from using multiple callbacks.
+      </p>
+      <h4>The Promise Life Cycle</h4>
+      <p>
+        When a promise is created, it calls an asynchronous operation and is
+        then said to be pending. It remains in this state while the operation is
+        taking place. At this stage, the promise is said to be unsettled. Once
+        the operation has completed, the promise is said to have been settled. A
+        settled promise can result in two different outcomes:
+      </p>
+      <ul>
+        <li>
+          Resolved ― the asynchronous operation was completed successfully.
+        </li>
+        <li>
+          Rejected ― the asynchronous operation didn’t work as expected, wasn't
+          successfully completed or resulted in an error.
+        </li>
+      </ul>
+      <p>
+        Both these outcomes will return any relevant data, and you can take the
+        appropriate action based on the outcome of the promise.
+      </p>
+      <h4>A Super Promise</h4>
+      Imagine if a shady character gave you a red pill, and promised that if you
+      took it, you'd be a superhero. Being an adventurous sort, you swallow the
+      pill and wait to see what happens. You're currently in the pending phase
+      of a promise, waiting to see what the result will be.
+      <br />
+      Suddenly you find that you have the power to dodge bullets as if time was
+      standing still! The promise has been resolved, and now you need to go off
+      and use your newly acquired powers.
+      <br />
+      But if nothing happens, you would reject the promise and warn people that
+      a stranger is wandering around giving out red pills and peddling a
+      fanciful story.
+      <br />
+      This scenario puts a comic-book spin on the phases of a promise. There is
+      a pending phase while you wait on the results of an operation (taking the
+      pill). Then once the promise is settled, you deal with the results in an
+      appropriate way ― by using your superpowers if the promise is resolved, or
+      dealing with any problems if it doesn't work out.
+      <br />
+      The
+      <a href="http://kosamari.com/notes/the-promise-of-a-burger-party">
+        Promise of a Burger Party
+      </a>
+      is a brilliant post by Mariko Kosaka that explains the concept of promises
+      by comparing them to ordering a burger!
+    </div>
+
+    <h4>Creating A Promise</h4>
+    <p>
+      A promise is created using a constructor function. This takes a function
+      called an executor as an argument. The executor initializes the promise
+      and starts the asynchronous operation. It also accepts two functions as
+      arguments: the resolve() function is called if the operation is
+      successful, and the reject() function is called if the operation fails.
+      The general layout of a promise can be seen in the code below:
+    </p>
+    <p>
+      const promise = new Promise( (resolve, reject) => { <br />
+      // initialization code goes here <br />
+      if (success) { <br />
+      resolve(value); <br />
+      } else { <br />
+      reject(error); <br />
+      } });
+    </p>
+    <h4>A Dicey Example</h4>
+    <p>
+      Let's take a look at an example of a promise that uses the dice object we
+      created back in chapter 5:
+    </p>
+    <p>
+      const dice = { <br />
+      sides: 6, <br />
+      roll() { <br />
+      return Math.floor(this.sides * Math.random()) + 1; <br />
+      }<br />
+      }
+    </p>
+    <p>
+      Now let's create a promise that uses the dice.roll() method as the
+      asynchronous operation and considers rolling a 1 as a failure, and any
+      other number as a success:
+    </p>
+    <p>
+      const promise = new Promise( (resolve,reject) => { <br />
+      const n = dice.roll(); <br />
+      setTimeout(() => { <br />
+      (n > 1) ? resolve(n) : reject(n); <br />
+      }, n*1000); <br />
+      });
+    </p>
+    <p>
+      This creates a variable called promise that holds a reference to the
+      promise. The promise calls the roll() method and stores the return value
+      in a variable called n. Next, we use an if-else block to specify the
+      conditions for success (rolling any number higher than 1) and failure
+      (rolling a 1). The setTimeout() method we met in Chapter 9 is used to add
+      a short delay based on the number rolled. This is to mimic the time taken
+      for an asynchronous operation to complete.
+      <br />
+      Notice that both the resolve() and reject() functions return the value of
+      the n variable. This can be used when dealing with the outcome of the
+      promise once it’s been settled.
+    </p>
+    <h4>Dealing With A Settled Promise</h4>
+    <p>
+      Once a promise has been settled, the then() method can be used to deal
+      with the outcome. This method accepts two arguments. The first is a
+      fulfilment function that’s called when the promise is resolved. Any data
+      returned from the resolve() function will be passed along to this
+      function. The second argument is a rejection function that’s called if the
+      promise is rejected. Similar to the fulfilment function, the rejection
+      function receives any data returned from the reject() function. <br />
+      In the case of our dice example, both functions will receive the value of
+      the number rolled. Let's have a look at how we could deal with that:
+    </p>
+    <p>
+      promise.then( result => console.log(`Yes! I rolled a ${result}`), result
+      => console.log(`Drat! ... I rolled a ${result}`) );
+    </p>
+    <p>
+      The first argument is simply a function that logs a celebratory message to
+      the console, stating the number rolled (this is passed to the then()
+      method as the variable result). The second argument logs an annoyed
+      message and, again, states the number rolled.
+      <br />
+      Alternatively, the catch() method can be used to specify what to do if the
+      operation fails instead:
+    </p>
+    <p>
+      promise.catch( result => console.log(`Drat! ... I rolled a ${result}`));
+    </p>
+    <p>
+      The then() and catch() methods can be chained together to form a succinct
+      description of how to deal with the outcome of the promise:
+    </p>
+    <p>
+      promise.then( result => console.log(`I rolled a ${result}`) )<br />
+      .catch( result => console.log(`Drat! ... I rolled a ${result}`) );
+    </p>
+    <p>
+      To try this code out, paste the following code into your browser console
+      or use
+      <a href="https://jsbin.com/lesaxafiya/edit?js,console">
+        JS Bin with ES6/Babel enabled:
+      </a>
+    </p>
+    <p>
+      const dice = { <br />
+      sides: 6, <br />
+      roll() { <br />
+      return Math.floor(this.sides * Math.random()) + 1; <br />
+      } <br />
+      } <br />
+      <br />
+      console.log('Before the roll');<br />
+      <br />
+      const roll = new Promise( (resolve,reject) => {<br />
+      const n = dice.roll();<br />
+      if(n > 1){<br />
+      setTimeout(()=>{resolve(n)},n*200);<br />
+      } else {<br />
+      setTimeout(()=>reject(n),n*200);<br />
+      }<br />
+      });<br />
+      <br />
+      roll.then(result => console.log(`I rolled a ${result}`) )<br />
+      .catch(result => console.log(`Drat! ... I rolled a ${result}`) );<br />
+      <br />
+      console.log('After the roll');<br />
+    </p>
+    <p>
+      When you press the 'Run' button, you should see the following output in
+      the console:
+    </p>
+    <p>
+      before promise <br />
+      promise pending... <br />
+      after promise <br />
+    </p>
+    <p>
+      Then there should be a pause, while the promise is resolved, followed by
+      the resulting message:
+    </p>
+    <p>Drat! ... I rolled a 1</p>
+    <p>
+      The messages in the console also give an insight into the asynchronous
+      nature of JavaScript. Notice that the last message 'after promise' is
+      displayed before the result of the settled promise. This shows that the
+      language will continue to process the rest of the code while the promise
+      is being resolved, before coming back and dealing with the result of the
+      promise.
+    </p>
+    <h4>Chaining Multiple Promises</h4>
+    <p>
+      Promises come into their own when multiple asynchronous tasks are required
+      to be carried out one after the other. If each function that performs an
+      asynchronous operation returns a promise, we can chain the then() methods
+      together to form a sequential piece of code that’s easy to read. Each
+      promise will only begin once the previous promise has been settled.
+    </p>
+    <p>
+      For example, the player logging in to a game that produced the callback
+      hell earlier, could be written in a much nicer way by using promises:
+    </p>
+    <p>
+      login(userName) <br />
+      .then(user => getPlayerInfo(user.id)) <br />
+      .then(info => loadGame(info)) <br />
+      .catch( throw error) <br />
+    </p>
+
+    <h4>Async Functions</h4>
+    <p>
+      Async functions were added to the ES2017 specification. These functions
+      are preceded by the async keyword and allow you to write asynchronous code
+      as if it was synchronous. This is achieved by using the await operator
+      before an asynchronous function. This will wrap the return value of the
+      function in a promise that can then be assigned to a variable. The next
+      line of code is not executed until the promise is resolved.
+    </p>
+    <p>
+      The example below shows how the loadGame() function can be written an
+      async function:
+    </p>
+
+    <p>
+      async function loadGame(userName) { <br />
+      <br />
+      try {<br />
+      const user = await login(userName);<br />
+      const info = await getPlayerInfo (user.id);<br />
+      // load the game using the returned info<br />
+      }<br />
+      <br />
+      catch (error){<br />
+      throw error;<br />
+      }<br />
+      }
+    </p>
+    <p>
+      In the example, the loadGame function is preceded by the async keyword,
+      meaning the function will run in an asynchronous fashion. We then wrap
+      each step of the process in a try block, so any errors are caught. Inside
+      this block, we can write each step in the order it’s meant to be
+      processed, so we start by assigning the variable user to the return value
+      of the login() function. The await operator will ensure the next line of
+      code is not executed until the login() function returns a user object. The
+      getPlayerInfo() function is also preceded by the await operator. Once this
+      function returns a result, it’s assigned to the variable info, and this
+      can then be used to load the actual game. A catch block is used to deal
+      with any errors that may occur.
+    </p>
+
+    <h4>Generalized Functions</h4>
+    <p>
+      Callbacks can be used to build more generalized functions. Instead of
+      having lots of specific functions, one function can be written that
+      accepts a callback. For example, let's create a function that returns a
+      random integer between two values that are provided as arguments, a and b,
+      or if only 1 argument is provided, it will return a random integer between
+      1 and the argument provided:
+    </p>
+
+    <p>
+      function random(a,b=1) {<br />
+      // if only 1 argument is provided, we need to swap the values of a and
+      b<br />
+      if (b === 1) {<br />
+      [a,b] = [b,a];<br />
+      } <br />
+      return Math.floor((b-a+1) * Math.random()) + a;<br />
+      }<br />
+      <br />
+      random(6);<br />
+      << 4<br />
+      <br />
+      random(10,20);<br />
+      << 13
+    </p>
+    <p>
+      This is an example of an abstraction, as it wraps all the logic cleanly
+      away inside the function.
+      <br />
+      We could refactor this function to make it more generic by adding a
+      callback parameter, so a calculation is performed on the random number
+      before it’s returned:
+    </p>
+    <p>
+      function random(a,b,callback) {<br />
+      if (b === undefined) b = a, a = 1; // if only one argument is supplied,
+      assume the lower limit is 1<br />
+      const result = Math.floor((b-a+1) * Math.random()) + a<br />
+      if(callback) {<br />
+      result = callback(result);<br />
+      }<br />
+      return result;<br />
+      }
+    </p>
+    <p>
+      Now we have a function where more flexibility can be added using a
+      callback. For example, we can use the square() function from earlier in
+      the chapter to produce a random square number from one to 100:
+    </p>
+    <p>
+      function square(n) { <br />
+      return n*n; <br />
+      } <br />
+      <br />
+      random(1,10,square); <br />
+      << 49
+    </p>
+    <p>Or a random even number from two to ten:</p>
+    <p>
+      random(1,5, (n) => 2 * n ); <br />
+      << 8
+    </p>
+    <p>
+      Notice that in the last example, the callback is an anonymous function
+      that is defined inline as one of the random() function's arguments.
+    </p>
+
+    <h3>Functions That Return Functions</h3>
+    <p>
+      We've just seen that functions can accept another function as an argument
+      (a callback), but they can also return a function.
+      <br />
+      The example below shows a function called returnHello() that returns a
+      'Hello World' function:
+    </p>
+
+    <p>
+      function returnHello() { <br />
+      console.log('returnHello() called'); <br />
+      return function() { <br />
+      console.log('Hello World!'); <br />
+      } <br />
+      }
+    </p>
+    <p>
+      When the returnHello() function is invoked, it logs a message to the
+      console then returns another function:
+    </p>
+    <p>
+      returnHello() <br />
+      << returnHello() called
+    </p>
+    <p>
+      To make use of the function that is returned, we need to assign it to a
+      variable:
+    </p>
+    <p>
+      const hello = returnHello(); <br />
+      << returnHello() called
+    </p>
+    <p>
+      Now we can invoke the 'Hello World' function by placing parentheses after
+      the variable that it was assigned to:
+    </p>
+    <p>
+      hello()<br />
+      << Hello World!
+    </p>
+    <p>
+      This might seem a bit pointless, but let's now take it a step further and
+      use this technique to create a generic 'greeter' function that takes a
+      particular greeting as a parameter, then returns a more specific greeting
+      function:
+    </p>
+
+    <p>
+      function greeter(greeting = 'Hello') {<br />
+      return function() {<br />
+      console.log(greeting);<br />
+      }<br />
+      }<br />
+      <br />
+      const englishGreeter = greeter();<br />
+      englishGreeter();<br />
+      << Hello<br />
+      <br />
+      const frenchGreeter = greeter('Bonjour');<br />
+      frenchGreeter();<br />
+      << Bonjour<br />
+      <br />
+      <br />
+      const germanGreeter = greeter('Guten Tag');<br />
+      germanGreeter();<br />
+      << Guten Tag
+    </p>
+    <h3>Closures</h3>
+    <p>
+      Closures are one of JavaScript’s most powerful features, but they can be
+      difficult to get your head around initially.
+    </p>
+    <h4>Function Scope</h4>
+    <p>
+      Back in Chapter 2, we saw the value of a variable was only available
+      inside the block it was created inside if the const or let keywords were
+      used. This also applies to the body of a function if the var keyword is
+      used.
+      <br />
+      In the following example, there are two variables: outside, which is
+      available throughout the program, and inside, which is only available
+      inside the function:
+    </p>
+    <p>
+      const outside = 'In the global scope'; <br />
+      function fn() { <br />
+      const inside = 'In the function scope'; <br />
+      } <br />
+      <br />
+      outside <br />
+      << 'In the global scope' <br />
+      <br />
+      inside <br />
+      << ReferenceError: inside is not defined
+    </p>
+    <p>
+      It appears we’re unable to access the variable inside outside the scope
+      the function.<br />
+      <br />
+      This is because the variable inside is only kept 'alive' while the
+      function is active. Once the function has been invoked, any references to
+      variables inside its scope are removed.<br />
+      <br />
+      It turns out, however, that we can gain access to variables outside the
+      function where it was created, and after the function has been invoked.<br />
+      <br />
+      A closure is a reference to a variable that was created inside the scope
+      of another function, but is then kept alive and used in another part of
+      the program.<br />
+      <br />
+      One of the key principles in creating closures is that an 'inner'
+      function, which is declared inside another function, has full access to
+      all of the variables declared inside the scope of the function in which
+      it’s declared (the 'outer' function). This can be seen in the example
+      below:
+    </p>
+    <p>
+      function outer() { <br />
+      const outside = 'Outside!'; <br />
+      function inner() { <br />
+      const inside = 'Inside!'; <br />
+      console.log(outside); <br />
+      console.log(inside); <br />
+      } <br />
+      console.log(outside); <br />
+      inner(); <br />
+      }
+    </p>
+    <p>
+      The outer() function only has access to the variable outside, which was
+      declared in its scope. The inner() function, however, has access to the
+      variable inside, declared in its scope, but also the variable outside,
+      declared outside its scope, but from within the outer() function.
+      <br />
+      We can see this when we invoke the outside() function:
+    </p>
+    <p>
+      outer()<br />
+      << Outside!<br />
+      Inside!<br />
+      Outside!
+    </p>
+    <p>
+      This means that whenever a function is defined inside another function,
+      the inner function will have access to any variables that are declared in
+      the outer function's scope.
+    </p>
+    <h3>Returning Functions</h3>
+    <p>
+      As we saw in the example above, functions declared from within another
+      function have access to any variables declared in the outer function’s
+      scope.<br />
+      <br />
+      A closure is formed when the inner function is returned by the outer
+      function, maintaining access to any variables declared inside the
+      enclosing function.<br />
+      <br />
+    </p>
+    <p>
+      function outer() { <br />
+      const outside = 'Outside!'; <br />
+      function inner() { <br />
+      const inside = 'Inside!'; <br />
+      console.log(outside); <br />
+      console.log(inside); <br />
+      } <br />
+      return inner; <br />
+      }
+    </p>
+    <p>
+      We can now assign a variable to the return value of the outer() function:
+    </p>
+    <p>const closure = outer();</p>
+    <p>
+      The variable closure now points to the inner() function that is returned
+      by the outer() function.<br />
+      <br />
+      What makes this a closure is that it now has access to the variables
+      created inside both the outer() and inner() functions, as we can see when
+      we invoke it:
+    </p>
+    <p>
+      closure();<br />
+      << Outside!<br />
+      Inside!
+    </p>
+    <p>
+      This is important as the variable outside should only exist while the
+      outer() function is running. The closure maintains access to this
+      variable, however, even though the outer() has been invoked.<br />
+      <br />
+      A closure doesn't just have access to the value of a variable, it can also
+      change the value of the variable long after the function in which it was
+      originally declared has been invoked.
+    </p>
+    <h3>Functional Programming</h3>
+    <p>
+      Functional programming has gained momentum in recent years, with a
+      dedicated following. The popularity of purely functional languages, such
+      as Clojure, Scala and Erlang, sparked an interest in functional
+      programming techniques that continues to grow. JavaScript has always
+      supported functional-style programming due to functions being first-class
+      objects. The ability to pass functions as arguments, return them from
+      other functions, and use anonymous functions and closures, are all
+      fundamental elements of functional programming that JavaScript excels at.
+      <br />
+      <br />
+      Functional programming is a programming paradigm. Other examples of
+      programming paradigms include object oriented programming and procedural
+      programming. JavaScript is a multi-paradigm language, meaning that it can
+      be used to program in a variety of paradigms (and sometimes a mash-up of
+      them!). This flexibility is an attractive feature of the language, but it
+      also makes it harder to adopt a particular coding style as the principles
+      are not enforced by the language. A language such as Haskell, which is a
+      purely functional language, is much stricter about adhering to the
+      principles of functional programming.
+    </p>
+    <h3>Currying</h3>
+    <p>
+      Currying is a process that involves the partial application of functions.
+      It’s named after the logician Haskell Curry — not the spicy food — just
+      like the programming language Haskell is. His work on a paper by Moses
+      Schönfinkel lead to the development of this programming technique.<br />
+      <br />
+      A function is said to be curried when not all arguments have been supplied
+      to the function, so it returns another function that retains the arguments
+      already provided, and expects the remaining arguments that were omitted
+      when the original function was called. A final result is only returned
+      once all the expected arguments have eventually been provided.<br />
+      <br />
+      Currying relies on higher-order functions that are able to return
+      partially applied functions. All curried functions are higher-order
+      functions because they return a function, but not all higher-order
+      functions are curried.<br />
+      <br />
+      The power() function above is an example of a higher-order function that
+      can be curried as it will expects two arguments, but will return another,
+      curried function, if the only one argument is provided.<br />
+      <br />
+      Currying allows you to turn a single function into a series of functions
+      instead. This is useful if you find that you’re frequently calling a
+      function with the same argument.
+    </p>
+
+    <h2>Ajax</h2>
+    <p>
+      Ajax is a technique that allows web pages to communicate asynchronously
+      with a server, and it dynamically updates web pages without reloading.
+      This enables data to be sent and received in the background, as well as
+      portions of a page to be updated in response to user events, while the
+      rest of the program continues to run.<br />
+      <br />
+      The use of Ajax revolutionized how websites worked, and ushered in a new
+      age of web applications. Web pages were no longer static, but dynamic
+      applications.
+    </p>
+    <div>
+      <h3>Questions</h3>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Challenges</h2>
+      <h2>Group Activity</h2>
+      <a href="./teamactivity/index.html">Team Activity</a>
+    </div>
+  </body>
+</html>
