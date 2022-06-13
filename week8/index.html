@@ -1,0 +1,317 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week 7</title>
+  </head>
+  <body>
+    <div>
+      <h1>Notes</h1>
+    </div>
+    <div>
+      <h2>CSS3 Transforms and Transitions</h2>
+    </div>
+    <div>
+      <h3>Transforms</h3>
+      <p>
+        The CSS3 transform property lets you lets you translate, rotate, scale,
+        and/or skew any element on the page. While some of these effects were
+        possible using previously existing CSS features (such as translating
+        with relative and absolute positioning), CSS3 gives you unprecedented
+        control over many more aspects of the element’s appearance. <br />
+
+        We can manipulate an element’s appearance using transform functions. The
+        value of the transform property is one or more transform functions
+        (separated by spaces) that will be applied in the order they’re
+        provided. In this book, we’ll cover all the two-dimensional transform
+        functions. All modern browsers, starting with IE10 and Android 3, also
+        support the transformation of elements in 3D space, but 3D transforms
+        are beyond the scope of this book.
+      </p>
+      <h4>Translation</h4>
+      <p>
+        Translation functions allow you to move elements left, right, up, or
+        down. These functions are similar to the behavior of position: relative;
+        when declaring top and left, moving elements up and down or left and
+        right along the x and y axes. When you employ a translation function,
+        you’re moving elements without impacting the flow of the document.
+        Unlike position: relative, which allows you to position an element
+        either against its current position or against a parent or other
+        ancestor, a translated element can only be moved relative to its current
+        position.
+
+        <br />
+
+        The translate(x,y) function moves an element x from the left, and y from
+        the top:
+      </p>
+      <p>transform: translate(45px, -45px);</p>
+      <h5>Note: Transforms and Older Browsers</h5>
+      <p>
+        Transforms require vendor prefixing for IE9, Android up to 4.4.3, iOS8,
+        and Blackberry 10. To make the aforementioned code work in IE9 and older
+        mobile WebKit browsers, you would include the following: <br />
+        -webkit-transform: translate(45px,-45px); /* iOS8, Android <br />
+        ↵4.4.3, BB10 */ <br />
+        -ms-transform: translate(45px,-45px); /* IE9 only */ <br />
+        transform: translate(45px,-45px); <br />
+      </p>
+      <p>
+        If you only want to move an element vertically or horizontally, you can
+        use the translatex or translatey functions respectively. To move 45px to
+        the right along the x axis, include: <br />
+        transform: translateX(45px); <br />
+        To move up along the y axis by 30px, include: <br />
+        transform: translateY(-30px); <br />
+      </p>
+
+      <h4>Scaling</h4>
+      <p>
+        The scale(x,y) function scales an element by the defined factors
+        horizontally then vertically. If only one value is provided, it will be
+        used for both the x and y values, growing or shrinking your element or
+        pseudo-element while maintaining the original aspect ratio. For example,
+        scale(1) would leave the element the same size, scale(2) would double
+        its proportions, scale(0.5) would halve them, and so on. Providing
+        different values will distort the element, as you’d expect:
+        <br />
+        transform: scale(1.5, 0.25);
+        <br />
+        As with translate, you can also use the scaleX(x) or scaleY(y)
+        functions. These functions will scale only the horizontal dimensions or
+        only the vertical dimensions respectively.
+        <br />
+        A scaled element will grow outwards from or shrink inwards towards its
+        center; in other words, the element’s center will stay in the same place
+        as its dimensions change. To change this default behavior, you can
+        include the transform-origin property, which we’ll be covering a bit
+        later.
+      </p>
+
+      <h4>Rotation</h4>
+      <p>
+        The rotate() function rotates an element around the point of origin by a
+        specified angle value. As with scale, by default the point of origin is
+        the element’s center. Generally, angles are declared in degrees, with
+        positive degrees moving clockwise and negative moving counterclockwise.
+        In addition to degrees, values can be provided in grads, radians, or
+        turns, but we’ll just be sticking with degrees.
+      </p>
+
+      <h4>Skew</h4>
+      <p>
+        The skew(x,y) function specifies a skew along the x and y axes. As you’d
+        expect, the x specifies the skew on the x axis, and the y specifies the
+        skew on the y axis. If the second parameter is omitted, the skew will
+        only occur on the x axis: <br />
+        transform: skew(15deg, 4deg);
+      </p>
+
+      <h3>Transitions</h3>
+      <p>
+        Animation has certainly been possible for some time with JavaScript, but
+        native CSS transitions generally require less client-side processing, so
+        they’ll usually appear smoother. On mobile devices with limited
+        computing power, this can be a lifesaver.<br />
+        <br />
+        As much fun as it’s been to have a feature work in IE9, it’s time to
+        again leave that browser behind. IE10 and all other browsers support CSS
+        transitions, and transitions are UI enhancements, and fail accessibly,
+        so we need not worry about archaic IE browsers.<br />
+        <br />
+        Transitions allow the values of CSS properties to change over time,
+        essentially providing simple animations. For example, if a link changes
+        color on hover, you can have it gradually fade from one color to the
+        other instead of a sudden change. They’re both transitions, but with the
+        CSS transition property the color transition can be gradual. If the
+        browser lacks support for transitions, the change will be immediate
+        instead of gradual, which is fine and accessible.<br />
+        <br />
+        We can animate any of the transforms we’ve just seen, so that our pages
+        feel more dynamic.<br />
+        <br />
+        CSS transitions are declared along with the regular styles on an
+        element. Whenever the target properties change, the browser will apply
+        the transition making the change gradual. Often the change will be due
+        to different styles applied to a hover state; however, transitions will
+        work equally well if the property in question is changed by adding a
+        class, or otherwise using JavaScript to change state. This is
+        significant: rather than writing out an animation in JavaScript, you can
+        simply switch a property value and rely on the browser to do all the
+        heavy lifting.
+      </p>
+
+      <p>Here are the steps to create a simple transition using only CSS:</p>
+      <ol>
+        <li>
+          Declare the original state of the element in the default style
+          declaration.
+        </li>
+        <li>
+          Declare the final state of your transitioned element; for example, a
+          :hover state.
+        </li>
+        <li>
+          Include the transition functions in your default style declaration
+          using the transition properties, including: transition-property,
+          transition-duration, transition-timing-function, and transition-delay.
+          We’ll look at each of these and how they work shortly.
+        </li>
+      </ol>
+
+      <p>
+        The transition-property property defines the CSS properties of the
+        element that should be transitioned, with all for all properties being
+        the default.
+      </p>
+      <h4>The transition-duration Property</h4>
+      <p>
+        The transition-duration property sets how long the transition will take:
+        the duration of time it takes to go from the default state to the
+        transitioned state. You can specify this either in seconds (s) or
+        milliseconds (ms). We’d like our animation to be fairly quick, so we’ll
+        specify 0.2 seconds (0.2s), or 200 milliseconds (200ms):
+      </p>
+
+      <h4>The transition-timing-function Property</h4>
+      <p>
+        The transition-timing-function lets you control the pace of the
+        transition in even more granular detail. Do you want your animation to
+        start off slow and become faster, start off fast and end slower, advance
+        at an even keel, or some other variation? <br />
+
+        The most common timing functions include the key terms ease, linear,
+        ease-in, ease-out, or ease-in-out. The default ease has a slow start,
+        then it speeds up, and ends slowly. ease-in-out is similar to ease, but
+        accelerates more sharply at the beginning. linear creates a transition
+        that animates at a constant speed. ease-in creates a transition that is
+        slow to start but gains speed, then stops abruptly. The opposite,
+        ease-out, starts at full speed, then slows progressively as it reaches
+        the conclusion of the transition. The best way to familiarize yourself
+        with them is to play around and try them all. Most often, one will just
+        feel right for the effect you’re aiming to create. It’s helpful to set a
+        relatively long transition-duration when testing timing functions—if
+        it’s too fast, you may not be able to tell the difference.
+      </p>
+
+      <h4>The transition-delay Property</h4>
+      <p>
+        Finally, by using the transition-delay property, it’s possible to
+        introduce a delay before the transition begins. Normally a transition
+        begins immediately, so the default is 0. Include the number of
+        milliseconds (ms) or seconds (s) to delay the transition. We don’t want
+        our transition to start immediately, because that might be a bad user
+        experience if the user accidentally mouses through our ad on the way
+        from one part of the document to the next. A 50ms delay is enough time
+        to wait to be sure they are intentionally hovering over our
+        advertisement: <br />
+        <br />
+        -webkit-transition-delay: 50ms; transition-delay: 50ms;
+      </p>
+
+      <h3>Animations</h3>
+      <p>
+        Transitions animate elements over time; however, they’re limited in what
+        they can do. You can define starting and ending states, but there’s no
+        fine-grained control over any intermediate states. CSS animations,
+        unlike transitions, allow you to control each step of an animation via
+        keyframes. <br />
+        <br />
+        If you’ve ever worked with Flash, you’re likely very familiar with the
+        concept of keyframes; if not, don’t worry, it’s fairly straightforward.
+        A keyframe is a snapshot that defines a starting or end point of any
+        smooth transition. With CSS transitions, we’re essentially limited to
+        defining a first and a last keyframe. CSS animations allow us to add any
+        number of keyframes in between, to guide our animation in more complex
+        ways. <br />
+        <br />
+        All modern browsers support CSS animation, starting with IE10, though we
+        still require the -webkit- prefix in iOS8, Android 4.4.3, and BlackBerry
+        10. IE10 is unprefixed. Firefox 16, Chrome 39, and Opera 26 dropped
+        their need for a prefix for CSS animations. <br />
+        <br />
+        The lack of powerful processors on many mobile devices makes CSS
+        animations a great alternative to weighty, CPU-intensive JavaScript
+        animation. Generally, it is best to use CSS for simple-state changes in
+        a mobile environment. But it’s still better to employ JavaScript for
+        intricate, stateful UIs, and when you do, you’ll likely want to use a
+        JavaScript animation library to help with manageability and performance.
+        <br />
+        <br />
+        We do have a subtle animation in our Herald, so we’ll use CSS for our
+        animations.
+      </p>
+
+      <h4>Keyframes</h4>
+      <p>
+        To animate an element in CSS, you first create a named animation, then
+        attach it to an element in that element’s property declaration block.
+        Animations in themselves don’t do anything; in order to animate an
+        element, you’ll need to associate the animation with that element.
+        <br />
+        <br />
+        To create an animation, use the @keyframes rule for IE10+ and FF16+.
+        Include @-webkit-keyframes for all WebKit implementations followed by a
+        name of your choosing, which will serve as the identifier for the
+        animation. Then, you can specify your keyframes. <br />
+        <br />
+        For an animation called myAnimation, the @keyframes rule would look like
+        this: <br />
+        <br />
+
+        @-webkit-keyframes myAnimation { <br />
+        /* put animation keyframes here */ <br />
+        } <br />
+        @keyframes myAnimation { <br />
+        /* put animation keyframes here */ <br />
+        }
+      </p>
+      <p>
+        function wait(message, callback, seconds){<br />
+        setTimeout(callback,seconds * 1000);<br />
+        console.log(message);<br />
+        }
+      </p>
+      <p>
+         @keyframes moveRight { <br />
+            from { <br />
+            transform: translateX(-50%); <br />
+            } <br />
+            to { <br />
+            transform: translateX(50%); <br />
+            } <br />
+        } <br />
+        <br />
+        @keyframes appearDisappear { <br />
+            0%, 100% { <br />
+            opacity: 0; <br />
+            } <br />
+            20%, 80% { <br />
+            opacity: 1; <br />
+            } <br />
+        } <br />
+        <br />
+        @keyframes bgMove { <br />
+            100% { <br />
+            background-position: 120% 0; <br />
+            } <br />
+        }
+      </p>
+    <div>
+      <h3>Questions</h3>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Challenges</h2>
+      <h2>Group Activity</h2>
+      <a href="./teamactivity/index.html">Team Activity</a>
+    </div>
+  </body>
+</html>
