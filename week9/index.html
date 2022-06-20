@@ -1,0 +1,271 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week 9</title>
+  </head>
+  <body>
+    <div>
+      <h1>Notes</h1>
+    </div>
+    <div>
+      <h2>The Window Object</h2>
+      <p>
+        Every JavaScript environment has a global object. Any variables that are
+        created in the global scope are actually properties of this object, and
+        any functions are methods of it. In a browser environment the global
+        object is the window object, which represents the browser window that
+        contains a web page.
+      </p>
+      <p>In this chapter, we’ll cover these topics:</p>
+      <ul>
+        <li>The Browser Object Model</li>
+        <li>Finding out browser information</li>
+        <li>Browser history</li>
+        <li>Controlling windows</li>
+        <li>Cookies</li>
+        <li>Timing functions</li>
+      </ul>
+      <div>
+        <h3>The Browser Object Model</h3>
+        <p>
+          The Browser Object Model (or BOM for short) is a collection of
+          properties and methods that contain information about the browser and
+          computer screen. For example, we can find out which browser is being
+          used to view a page (though, this method is unreliable). We can also
+          find out the dimensions of the screen it is viewed on, and which pages
+          have been visited before the current page. It can also be used for the
+          rather dubious practice of creating pop-up windows, if you’re into
+          annoying your users.
+        </p>
+        <br />
+        <p>
+          There is no official standard for the BOM, although there are a number
+          of properties and methods that are supported by all the major
+          browsers, making a sort of de facto standard. These properties and
+          methods are made available through the window object. Every browser
+          window, tab, popup, frame, and iframe has a window object.
+        </p>
+        <p>The BOM Only Makes Sense in a Browser Environment</p>
+        <p>
+          Remember that JavaScript can be run in different environments. The BOM
+          only makes sense in a browser environment. This means that other
+          environments (such as Node.js) probably won’t have a window object,
+          although they will still have a global object; for example, Node.js
+          has an object called global.
+        </p>
+        <br />
+        <p>
+          If you don’t know the name of the global object, you can also refer to
+          it using the keyword this in the global scope. The following code
+          provides a quick way of assigning the variable global to the global
+          object:
+        </p>
+        <br />
+        <p>
+          // from within the global scope <br />
+          const global = this;
+        </p>
+        <div>
+          <h4>Going Global</h4>
+          <p>
+            All the way back in Chapter 2, we introduced the concept of global
+            variables. These are variables that are created without using the
+            const, let or var keywords. Global variables can be accessed in all
+            parts of the program.
+          </p>
+          <br />
+          <p>
+            Global variables are actual properties of a global object. In a
+            browser environment, the global object is the window object. This
+            means that any global variable created is actually a property of the
+            window object, as can be seen in the example below:
+          </p>
+          <p>
+            x = 6; // global variable created<br />
+            << 6<br />
+            <br />
+            window.x // same variable can be accessed as a property of the
+            window object<br />
+            << 6<br />
+            <br />
+            // both variables are exactly the same<br />
+            window.x === x;<br />
+            << true
+          </p>
+        </div>
+        <div>
+          <h4>Dialogs</h4>
+          <p>
+            In Chapter 1, we introduced three functions that produced dialogs in
+            the browsers: alert(), confirm() and prompt(). These are not part of
+            the ECMAScript standard, although all major browsers support them as
+            methods of the window object.
+          </p>
+          <p>
+            The window.alert() method will pause the execution of the program
+            and display a message in a dialog box. The message is provided as an
+            argument to the method, and undefined is always returned:
+          </p>
+          <p>
+            The window.confirm() method will stop the execution of the program
+            and display a confirmation dialog that shows the message provided as
+            an argument, and giving the options of OK or Cancel. It returns the
+            boolean values of true if the user clicks OK, and false if the user
+            clicks Cancel:
+          </p>
+          <p>
+            The window.prompt() method will stop the execution of the program.
+            It displays a dialog that shows a message provided as an argument,
+            as well as an input field that allows the user to enter text. This
+            text is then returned as a string when the user clicks OK. If the
+            user clicks Cancel, null is returned:
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h3>Browser Information</h3>
+        <p>
+          The window object has a number of properties and methods that provide
+          information about the user’s browser.
+        </p>
+        <div>
+          <h4>Which Browser?</h4>
+          <p>
+            The window object has a navigator property that returns a reference
+            to the Navigator object. The Navigator object contains information
+            about the browser being used. Its userAgent property will return
+            information about the browser and operating system being used. For
+            example, if I run the following line of code, it shows that I am
+            using Safari version 10 on Mac OS:
+          </p>
+          <p>
+            window.navigator.userAgent <br />
+            << "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3)
+            AppleWebKit/602.4.8 (KHTML, like Gecko) Version/10.0.3
+            Safari/602.4.8"
+          </p>
+          <p>
+            Don’t rely on this information though, as it can be modified by a
+            user to masquerade as a different browser. It can also be difficult
+            to make any sense of the string returned, because all browsers
+            pretend to be others to some degree. For example, every browser will
+            include the string “Mozilla” in its userAgent property, for reasons
+            of legacy Netscape compatibility. The userAgent property has been
+            deprecated from the official specification, but it remains well
+            supported in all major browsers.
+          </p>
+        </div>
+        <div>
+          <h4>Location, Location, Location</h4>
+          <p>
+            The window.location property is an object that contains information
+            about the URL of the current page. It contains a number of
+            properties that provide information about different fragments of the
+            URL.<br />
+            <br />
+          </p>
+          <p>
+            The href property returns the full URL as a string:<br />
+            <br />
+            window.location.href <br />
+            <<
+            "https://www.sitepoint.com/premium/books/javascript-novice-to-ninja"
+          </p>
+          <p>
+            The protocol property returns a string describing the protocol used
+            (such as http, https, pop2, ftp etc.). Note that there is a colon
+            (:) at the end:<br />
+            <br />
+            window.location.protocol <br />
+            << "https:"
+          </p>
+          <p>
+            The host property returns a string describing the domain of the
+            current URL and the port number (this is often omitted if the
+            default port 80 is used):<br />
+            <br />
+            window.location.host
+            <br />
+            << << "www.sitepoint.com"
+          </p>
+          <p>
+            The hostname property returns a string describing the domain of the
+            current URL:<br />
+            <br />
+            window.location.hostname <br />
+            << "www.sitepoint.com"
+          </p>
+          <p>
+            The port property returns a string describing the port number,
+            although it will return an empty string if the port is not
+            explicitly stated in the URL:<br />
+            <br />
+            window.location.port <br />
+            << ""
+          </p>
+          <p>
+            The pathname property returns a string of the path that follows the
+            domain:<br />
+            <br />
+            window.location.pathname <br />
+            << "/premium/books/javascript-novice-to-ninja"
+          </p>
+          <p>
+            The search property returns a string that starts with a “?” followed
+            by the query string parameters. It returns an empty string if there
+            are no query string parameters. This is what I get when I search for
+            “JavaScript” on SitePoint:<br />
+            <br />
+            window.location.search <br />
+            << "?q=javascript&limit=24&offset=0&page=1&
+            content_types[]=All&slugs[]=all&states[]=available&order="
+          </p>
+          <p>
+            The hash property returns a string that starts with a “#” followed by the fragment identifier. It returns an empty string if there is no fragment identifier:<br />
+            <br />
+            window.location.hash <br />
+            << ""
+          </p>
+          <p>
+            The origin property returns a string that shows the protocol and domain where the current page originated from. This property is read-only, so cannot be changed:<br />
+            <br />
+            window.location.origin <br />
+            << "https://www.sitepoint.com"
+          </p>
+          <ul>
+            <li>The reload() method can be used to force a reload of the current page. If it’s given a parameter of true, it will force the browser to reload the page from the server, instead of using a cached page.</li>
+            <li>The assign() method can be used to load another resource from a URL provided as a parameter, for example:</li>
+          </ul>
+          <p>
+            window.location.assign('https://www.sitepoint.com/')<br />
+            <br />
+            <ul>
+               <li>The replace() method is almost the same as the assign() method, except the current page will not be stored in the session history, so the user will be unable to navigate back to it using the back button.</li>
+               <li>The toString() method returns a string containing the whole URL:</li>
+             </ul>
+             window.location.toString(); <br />
+             << "https://www.sitepoint.com/javascript/"
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>Questions</h3>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Challenges</h2>
+      <h2>Group Activity</h2>
+      <a href="./teamactivity/index-START.html">Team Activity</a>
+    </div>
+  </body>
+</html>
