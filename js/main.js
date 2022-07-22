@@ -50,6 +50,16 @@ const links = [
    },
 
    {
+      label: "Week 11",
+      url: "week10/index.html"
+   },
+
+   {
+      label: "Week 12",
+      url: "week10/index.html"
+   },
+
+   {
       label: "Week 14",
       url: "finalproject/index.html"
    },
